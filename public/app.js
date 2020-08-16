@@ -38,6 +38,14 @@ function createEyes() {
   return eyes;
 }
 
+function mousemove(event) {
+  let eyes = document.getElementById("eyes");
+  let rect = eyes.getBoundingClientRect();
+  mx = event.pageX - rect.x;
+  my = event.pageY - rect.y;
+  app.run("/moved", mx, my);
+}
+
 class App extends Component {
   state = {
     eyes: [],
@@ -46,10 +54,7 @@ class App extends Component {
   };
   view = (state) => {
     let { mx, my, eyes } = state;
-    let onmousemove = () => {
-      console.log("MM");
-    }
-    return `<div id="eyes">
+    return `<div id="eyes" onmousemove='mousemove(event)'>
       ${eyes.map(
         ({ x, y, color, sz }) => `
           <spooky-eye x=${x} y=${y} color="${color}" sz=${sz} mx=${mx} my=${my}></spooky-eye>
@@ -64,5 +69,8 @@ class App extends Component {
     state.my = Math.random() * wh;
     state.eyes = createEyes();
   };
+  update = [
+    ['/moved', (state, mx, my) => ({...state,mx,my})],
+  ]
 }
 app.webComponent("eyes-app", App);

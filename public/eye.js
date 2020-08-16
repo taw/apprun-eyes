@@ -1,14 +1,7 @@
 class Eye extends Component {
-  state = {};
+  state = {mx: 0, my: 0};
   view = (state) => {
-    let x = state.x;
-    let y = state.y;
-    let sz = state.sz;
-    let color = state.color;
-
-    let props = this._props;
-    let mx = +props.mx;
-    let my = +props.my;
+    let { x, y, mx, my, sz, color } = state;
 
     let max_eye_movement = 0.3 * sz;
     let dx = mx !== null ? mx - x : 0;
@@ -25,17 +18,18 @@ class Eye extends Component {
         <circle class="eye2" cx=${rx} cy=${ry} r=${sz * 0.5} style="fill: ${color}"></circle>
         <circle class="eye3" cx=${rx} cy=${ry} r=${sz * 0.2}></circle>
       </g>
-    </svg>`
-  }
+    </svg>`;
+  };
   mounted = (props, children, state) => {
     state.x = +props.x;
     state.y = +props.y;
     state.sz = +props.sz;
     state.color = props.color;
+    state.mx = +props.mx;
+    state.my = +props.my;
   }
-  update = {
-    "+1": (state) => state + 1,
-    "-1": (state) => state - 1,
-  };
+  update = [
+     ['/moved', (state, mx, my) => ({...state,mx,my})],
+  ]
 }
 app.webComponent("spooky-eye", Eye);
