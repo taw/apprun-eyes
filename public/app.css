@@ -1,0 +1,32 @@
+#eyes {
+  width: 100vw;
+  height: 100vh;
+  display: block;
+  background-color: #aaa;
+}
+
+body {
+  margin: 0;
+}
+
+.eye1 {
+  fill: white;
+  stroke: black;
+  stroke-width: 3px;
+}
+
+.eye2 {
+  stroke: black;
+  stroke-width: 1px;
+}
+
+.eye3 {
+  fill: black;
+}
+
+svg {
+  height: 100%;
+  width: 100%;
+  background-color: none;
+  position: absolute;
+}
